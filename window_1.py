@@ -13,15 +13,17 @@ class Window1(Screen):
         with open('settings_memory.txt', 'r') as file1:
             self.second = list(map(int, file1.read().split()))
 
-        self.lab = Label(text=str(self.second[0]), font_size='30')
+        self.lab = Label(text=str(self.second[0]), font_size=140)
+        self.button = Button(text='Settings', on_press=self.settings)
+        self.button_1 = Button(text='Next', on_press=self.next)
 
         lent = BoxLayout(orientation='vertical', padding=10)
-        lent.add_widget(Button(text='+', font_size='30', background_color='#000000', on_press=self.enter))
-        lent.add_widget(self.lab)
-        lent.add_widget(Button(text='-', font_size='30', background_color='#000000', on_press=self.enter))
         lent_1 = BoxLayout(padding=2)
-        lent_1.add_widget(Button(text='Settings', on_press=self.settings))
-        lent_1.add_widget(Button(text='Next', on_press=self.next))
+        lent.add_widget(Button(text='+', font_size=140, background_color='#000000', on_press=self.enter))
+        lent.add_widget(self.lab)
+        lent.add_widget(Button(text='-', font_size=140, background_color='#000000', on_press=self.enter))
+        lent_1.add_widget(self.button)
+        lent_1.add_widget(self.button_1)
         lent.add_widget(lent_1)
 
         self.add_widget(lent)

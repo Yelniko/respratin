@@ -18,27 +18,26 @@ class Window2(Screen):
         self.lab_2_text = 'Hold your breath'
         self.lab_3_text = 'Exhalation'
         self.music = SoundLoader.load('music/chasyi-tikane-sekundomera-versiya-2-24139.mp3')
+        self.music_1 = SoundLoader.load('music/zvon-v-korabelnyiy-kolokol-37902.mp3')
+        self.music.loop = True
         self.config = []
 
         lent = BoxLayout(orientation='vertical', padding=10)
-        self.meter = Label(text='0', font_size=20)
-        self.bar_1 = ProgressBar(value=self.value, max=self.second)
-        self.bar_2 = ProgressBar(value=self.value, max=self.second * 4)
-        self.bar_3 = ProgressBar(value=self.value, max=self.second * 2)
-        self.but = Button(text='Start', on_press=self.start_stop)
-        self.bar_1_lab_1 = Label(text=self.lab_1_text)
-        self.bar_2_lab_2 = Label(text=self.lab_2_text)
-        self.bar_3_lab_3 = Label(text=self.lab_3_text)
-
-        lent.add_widget(self.meter)
-        lent.add_widget(self.bar_1_lab_1)
-        lent.add_widget(self.bar_1)
-        lent.add_widget(self.bar_2_lab_2)
-        lent.add_widget(self.bar_2)
-        lent.add_widget(self.bar_3_lab_3)
-        lent.add_widget(self.bar_3)
         lent_1 = BoxLayout(padding=2)
+        self.meter = Label(text='0', font_size=140)
+        self.bar_1 = ProgressBar(value=self.value, max=self.second, size_hint_y=None, height=40)
+        self.bar_2 = ProgressBar(value=self.value, max=self.second * 4, height=100)
+        self.bar_3 = ProgressBar(value=self.value, max=self.second * 2, height=100)
+        self.but = Button(text='Start', on_press=self.start_stop)
+        self.bar_1_lab_1 = Label(text=self.lab_1_text, font_size=80)
+        self.bar_2_lab_2 = Label(text=self.lab_2_text, font_size=80)
+        self.bar_3_lab_3 = Label(text=self.lab_3_text, font_size=80)
+
+        lent.add_widget(self.bar_1_lab_1)
+        lent.add_widget(self.bar_2_lab_2)
+        lent.add_widget(self.bar_3_lab_3)
         lent_1.add_widget(Button(text='Back', on_press=self.back))
+        lent_1.add_widget(self.meter)
         lent_1.add_widget(self.but)
         lent.add_widget(lent_1)
 
@@ -56,12 +55,14 @@ class Window2(Screen):
         if instance.text == 'Start':
             if self.config[1] == 1:
                 self.music.play()
+                self.cl_music_1 = Clock.schedule_interval(self.music_fan, self.config[0])
             self.meter.text = '0'
             self.but.text = 'Stop'
             self.timer()
             self.cl_4 = Clock.schedule_interval(self.tim, self.config[0] + self.config[0] * 2 + self.config[0] * 4)
         else:
             self.music.stop()
+            self.cl_music_1.cancel()
             try:
                 self.cl_1.cancel()
                 self.bar_1.value = 0
@@ -103,6 +104,21 @@ class Window2(Screen):
 
     def tim(self, df):
         self.meter.text = str(int(self.meter.text)+1)
+
+    def music_fan(self, df):
+        self.music_1.play()
+        self.cl_music_1.cancel()
+        self.cl_music_1 = Clock.schedule_interval(self.music_fan_1, self.config[0] * 4)
+
+    def music_fan_1(self, df):
+        self.music_1.play()
+        self.cl_music_1.cancel()
+        self.cl_music_1 = Clock.schedule_interval(self.music_fan_2, self.config[0] * 2)
+
+    def music_fan_2(self, df):
+        self.music_1.play()
+        self.cl_music_1.cancel()
+        self.cl_music_1 = Clock.schedule_interval(self.music_fan, self.config[0])
 
     def bar_prog(self, lis, *largs):
         if lis[1].value < lis[0]:
