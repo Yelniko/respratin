@@ -33,11 +33,14 @@ class Window2(Screen):
         self.bar_2_lab_2 = Label(text=self.lab_2_text, font_size=80)
         self.bar_3_lab_3 = Label(text=self.lab_3_text, font_size=80)
 
+        lent.add_widget(self.meter)
         lent.add_widget(self.bar_1_lab_1)
+        lent.add_widget(self.bar_1)
         lent.add_widget(self.bar_2_lab_2)
+        lent.add_widget(self.bar_2)
         lent.add_widget(self.bar_3_lab_3)
+        lent.add_widget(self.bar_3)
         lent_1.add_widget(Button(text='Back', on_press=self.back))
-        lent_1.add_widget(self.meter)
         lent_1.add_widget(self.but)
         lent.add_widget(lent_1)
 
@@ -55,7 +58,8 @@ class Window2(Screen):
         if instance.text == 'Start':
             if self.config[1] == 1:
                 self.music.play()
-                self.cl_music_1 = Clock.schedule_interval(self.music_fan, self.config[0])
+                self.cl_music_1 = Clock.schedule_interval(self.music_fan, self.config[0]-1)
+
             self.meter.text = '0'
             self.but.text = 'Stop'
             self.timer()

@@ -1,5 +1,4 @@
 from kivy.uix.screenmanager import ScreenManager
-from kivy.core.window import Window
 from settings import Settings
 from window_1 import Window1
 from window_2 import Window2
