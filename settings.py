@@ -20,6 +20,7 @@ class Settings(Screen):
         lent = BoxLayout(orientation='vertical', padding=10)
         self.music_button = Button(text=self.music_condition, font_size='140', on_press=self.music)
 
+        lent.add_widget(Label(text='Version 1.3', font_size='140'))
         lent.add_widget(self.music_button)
         lent.add_widget(Button(text='Exit', font_size='140', on_press=App.get_running_app().stop))
         lent.add_widget(Button(text='Back', font_size='140', on_press=self.back))

@@ -23,6 +23,7 @@ class Window2(Screen):
         self.config = []
 
         lent = BoxLayout(orientation='vertical', padding=10)
+        lent_1 = BoxLayout(padding=2)
         self.meter = Label(text='0', font_size=140)
         self.bar_1 = ProgressBar(value=self.value, max=self.second, size_hint_y=None, height=40)
         self.bar_2 = ProgressBar(value=self.value, max=self.second * 4, height=100)
@@ -39,7 +40,6 @@ class Window2(Screen):
         lent.add_widget(self.bar_2)
         lent.add_widget(self.bar_3_lab_3)
         lent.add_widget(self.bar_3)
-        lent_1 = BoxLayout(padding=2)
         lent_1.add_widget(Button(text='Back', on_press=self.back))
         lent_1.add_widget(self.but)
         lent.add_widget(lent_1)
@@ -59,6 +59,7 @@ class Window2(Screen):
             if self.config[1] == 1:
                 self.music.play()
                 self.cl_music_1 = Clock.schedule_interval(self.music_fan, self.config[0]-1)
+
             self.meter.text = '0'
             self.but.text = 'Stop'
             self.timer()
@@ -111,17 +112,17 @@ class Window2(Screen):
     def music_fan(self, df):
         self.music_1.play()
         self.cl_music_1.cancel()
-        self.cl_music_1 = Clock.schedule_interval(self.music_fan_1, self.config[0] * 4 - 1)
+        self.cl_music_1 = Clock.schedule_interval(self.music_fan_1, self.config[0] * 4)
 
     def music_fan_1(self, df):
         self.music_1.play()
         self.cl_music_1.cancel()
-        self.cl_music_1 = Clock.schedule_interval(self.music_fan_2, self.config[0] * 2 - 1)
+        self.cl_music_1 = Clock.schedule_interval(self.music_fan_2, self.config[0] * 2)
 
     def music_fan_2(self, df):
         self.music_1.play()
         self.cl_music_1.cancel()
-        self.cl_music_1 = Clock.schedule_interval(self.music_fan, self.config[0] - 1)
+        self.cl_music_1 = Clock.schedule_interval(self.music_fan, self.config[0])
 
     def bar_prog(self, lis, *largs):
         if lis[1].value < lis[0]:

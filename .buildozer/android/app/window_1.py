@@ -4,8 +4,6 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 
 
-
-
 class Window1(Screen):
     def __init__(self, name='first'):
         super().__init__(name=name)
@@ -17,8 +15,8 @@ class Window1(Screen):
         self.button = Button(text='Settings', on_press=self.settings)
         self.button_1 = Button(text='Next', on_press=self.next)
 
-        self.button.size_hint_y = 0.8
-        self.button_1.size_hint_y = 0.8
+        self.button.size_hint_y = 0.55
+        self.button_1.size_hint_y = 0.55
 
         lent = BoxLayout(orientation='vertical', padding=10)
         lent_1 = BoxLayout(padding=2)
