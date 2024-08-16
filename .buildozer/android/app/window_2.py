@@ -28,7 +28,7 @@ class Window2(Screen):
         self.bar_1 = ProgressBar(value=self.value, max=self.second, size_hint_y=None, height=40)
         self.bar_2 = ProgressBar(value=self.value, max=self.second * 4, height=100)
         self.bar_3 = ProgressBar(value=self.value, max=self.second * 2, height=100)
-        self.but = Button(text='Start', on_press=self.start_stop)
+        self.but = Button(text='Start', on_press=self.start_stop, font_size=20)
         self.bar_1_lab_1 = Label(text=self.lab_1_text, font_size=80)
         self.bar_2_lab_2 = Label(text=self.lab_2_text, font_size=80)
         self.bar_3_lab_3 = Label(text=self.lab_3_text, font_size=80)
@@ -40,7 +40,7 @@ class Window2(Screen):
         lent.add_widget(self.bar_2)
         lent.add_widget(self.bar_3_lab_3)
         lent.add_widget(self.bar_3)
-        lent_1.add_widget(Button(text='Back', on_press=self.back))
+        lent_1.add_widget(Button(text='Back', on_press=self.back, font_size=20))
         lent_1.add_widget(self.but)
         lent.add_widget(lent_1)
 
@@ -55,7 +55,7 @@ class Window2(Screen):
 
     def start_stop(self, instance):
         self.start()
-        if instance.text == 'Start':
+        if instance.text == 'Start' or instance.text == 'Restart':
             if self.config[1] == 1:
                 self.music.play()
                 self.cl_music_1 = Clock.schedule_interval(self.music_fan, self.config[0]-1)
@@ -93,7 +93,7 @@ class Window2(Screen):
             except:
                 pass
 
-            self.but.text = 'Start'
+            self.but.text = 'Restart'
 
     def timer(self):
         self.bar_1_lab_1.text = f'{self.lab_1_text}: {self.config[0]}'
@@ -165,5 +165,7 @@ class Window2(Screen):
     def back(self, instance):
         if self.but.text == 'Stop':
             self.start_stop(self.but)
+        self.but.text = 'Start'
+        self.meter.text = '0'
         self.manager.transition.direction = 'right'
         self.manager.current = 'first'

@@ -12,8 +12,8 @@ class Window1(Screen):
             self.second = list(map(int, file1.read().split()))
 
         self.lab = Label(text=str(self.second[0]), font_size=140)
-        self.button = Button(text='Settings', on_press=self.settings)
-        self.button_1 = Button(text='Next', on_press=self.next)
+        self.button = Button(text='Settings', on_press=self.settings, font_size=20)
+        self.button_1 = Button(text='Next', on_press=self.next, font_size=20)
 
         self.button.size_hint_y = 0.55
         self.button_1.size_hint_y = 0.55
