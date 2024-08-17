@@ -4,7 +4,7 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 
 
-class Window1(Screen):
+class WindowCT1(Screen):
     def __init__(self, name='window_customisable_triangle_1'):
         super().__init__(name=name)
 
@@ -12,8 +12,8 @@ class Window1(Screen):
             self.second = list(map(int, file1.read().split()))
 
         self.lab = Label(text=str(self.second[0]), font_size=140)
-        self.button = Button(text='Back', on_press=self.beck, font_size=20)
-        self.button_1 = Button(text='Next', on_press=self.next, font_size=20)
+        self.button = Button(text='Back', on_press=self.beck, font_size=100)
+        self.button_1 = Button(text='Next', on_press=self.next, font_size=100)
 
         self.button.size_hint_y = 0.55
         self.button_1.size_hint_y = 0.55

@@ -11,16 +11,35 @@ class WindowFirst(Screen):
 
         lent = BoxLayout(orientation='vertical', padding=10)
 
-        lent.add_widget(Label(text='Choose a breathing technique', font_size='50'))
-        lent.add_widget(Button(text='Breathing', font_size='50',))
-        lent.add_widget(Button(text='Customisable triangle', font_size='50', on_press=self.customisable_triangle))
-        lent.add_widget(Button(text='Settings', font_size='50', on_press=self.settings))
+        lent.add_widget(Label(text='Choose a breathing technique', font_size='85'))
+        lent.add_widget(Button(text='Breathing', font_size='85', on_press=self.breathing))
+        lent.add_widget(Button(text='Square', font_size='85', on_press=self.square))
+        lent.add_widget(Button(text='Triangle', font_size='85', on_press=self.triangle))
+        lent.add_widget(Button(text='Customisable triangle', font_size='85', on_press=self.customisable_triangle))
+        lent.add_widget(Button(text='Breath-holding', font_size='85', on_press=self.breath_holding))
+        lent.add_widget(Button(text='Settings', font_size='85', on_press=self.settings))
 
         self.add_widget(lent)
+
+    def breathing(self, instance):
+        self.manager.transition.direction = 'left'
+        self.manager.current = 'window_breathing'
+
+    def square(self, instance):
+        self.manager.transition.direction = 'left'
+        self.manager.current = 'window_square'
+
+    def triangle(self, instance):
+        self.manager.transition.direction = 'left'
+        self.manager.current = 'window_triangle'
 
     def customisable_triangle(self, instance):
         self.manager.transition.direction = 'left'
         self.manager.current = 'window_customisable_triangle_1'
+
+    def breath_holding(self, instance):
+        self.manager.transition.direction = 'left'
+        self.manager.current = 'window_breath-holding_1'
 
     def settings(self, instance):
         self.manager.transition.direction = 'right'

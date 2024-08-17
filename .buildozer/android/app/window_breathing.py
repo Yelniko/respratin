@@ -1,0 +1,144 @@
+from kivy.uix.progressbar import ProgressBar
+from kivy.uix.screenmanager import Screen
+from kivy.uix.boxlayout import BoxLayout
+from kivy.core.audio import SoundLoader
+from kivy.uix.button import Button
+from kivy.uix.label import Label
+from functools import partial
+from kivy.clock import Clock
+
+
+class WindowB(Screen):
+    def __init__(self, name='window_breathing'):
+        super().__init__(name=name)
+
+        self.value = 0
+        self.second = 4
+        self.seconds = 0
+        self.lab_1_text = 'Breath'
+        self.lab_2_text = 'Exhalation'
+        self.music = SoundLoader.load('music/chasyi-tikane-sekundomera-versiya-2-24139.mp3')
+        self.music_1 = SoundLoader.load('music/zvon-v-korabelnyiy-kolokol-37902.mp3')
+        self.music.loop = True
+        self.config = []
+
+        lent = BoxLayout(orientation='vertical', padding=10)
+        lent_1 = BoxLayout(padding=2)
+
+        self.meter = Label(text='0 : 00', font_size=140)
+
+        self.bar_1 = ProgressBar(value=self.value, max=self.second)
+        self.bar_2 = ProgressBar(value=self.value, max=self.second )
+
+        self.but_1 = Button(text='Back', on_press=self.back, font_size=100)
+        self.but_2 = Button(text='Start', on_press=self.start_stop, font_size=100)
+
+        self.bar_1_lab_1 = Label(text=self.lab_1_text, font_size=80)
+        self.bar_2_lab_2 = Label(text=self.lab_2_text, font_size=80)
+
+        lent.add_widget(self.meter)
+        lent.add_widget(self.bar_1_lab_1)
+        lent.add_widget(self.bar_1)
+        lent.add_widget(self.bar_2_lab_2)
+        lent.add_widget(self.bar_2)
+
+        lent_1.add_widget(self.but_1)
+        lent_1.add_widget(self.but_2)
+
+        lent.add_widget(lent_1)
+
+        self.add_widget(lent)
+
+    def start_config(self):
+        with open('settings_memory.txt', 'r') as file1:
+            self.config = list(map(int, file1.read().split()))
+
+    def start_stop(self, instance):
+        self.start_config()
+        if instance.text == 'Start' or instance.text == 'Restart':
+            if self.config[1] == 1:
+                self.music.play()
+                self.cl_music_1 = Clock.schedule_interval(self.music_fan, 3)
+
+            self.meter.text = '0 : 00'
+            self.seconds = 0
+            self.but_2.text = 'Stop'
+            self.timer()
+            self.cl_4 = Clock.schedule_interval(self.tim, 1)
+        else:
+            self.music.stop()
+            self.cl_music_1.cancel()
+            self.cl_4.cancel()
+            try:
+                self.cl_1.cancel()
+                self.bar_1.value = 0
+                self.bar_1_lab_1.text = self.lab_1_text
+                self.cl_1_lab_1.cancel()
+            except:
+                pass
+            try:
+                self.cl_2.cancel()
+                self.bar_2.value = 0
+                self.bar_2_lab_2.text = self.lab_2_text
+                self.cl_2_lab_2.cancel()
+            except:
+                pass
+
+
+            self.but_2.text = 'Restart'
+
+    def timer(self):
+        self.bar_1_lab_1.text = f'{self.lab_1_text}: {self.second}'
+        self.bar_2_lab_2.text = f'{self.lab_2_text}: {self.second}'
+
+        self.bar_1.value = 0.1
+
+        self.cl_1 = Clock.schedule_interval(partial(self.bar_prog, [self.second, self.bar_1]), 0.1)
+        self.cl_1_lab_1 = Clock.schedule_interval(partial(self.leb_prog, self.bar_1_lab_1), 1)
+        self.cl_2 = Clock.schedule_interval(self.cl_2_1, 4)
+
+    def tim(self, df):
+        self.seconds += 1
+        self.meter.text = f'{self.seconds // 60} : {(self.seconds % 60):02}'
+
+
+    def music_fan(self, df):
+        self.cl_music_1.cancel()
+        self.music_1.play()
+        self.cl_music_1 = Clock.schedule_interval(self.music_fan, 4)
+
+    def bar_prog(self, lis, *largs):
+        if lis[1].value < lis[0]:
+            lis[1].value += 0.1
+
+    def leb_prog(self, lis, *largs):
+        number = list(lis.text.split(': '))
+        if int(number[1]) > 0:
+            lis.text = f'{number[0]}: {int(number[1])-1}'
+
+    def cl_1_1(self, df):
+        self.cl_2.cancel()
+        self.cl_2_lab_2.cancel()
+        self.bar_2_lab_2.text = f'{self.lab_2_text}: 0'
+        self.bar_2.value = 0
+        self.cl_1.cancel()
+        self.timer()
+
+    def cl_2_1(self, df):
+        self.cl_1.cancel()
+        self.cl_1_lab_1.cancel()
+        self.bar_1_lab_1.text = f'{self.lab_1_text}: 0'
+        self.bar_1.value = 0
+        self.cl_2.cancel()
+        self.bar_2.value = 0.1
+        self.cl_2_lab_2 = Clock.schedule_interval(partial(self.leb_prog, self.bar_2_lab_2), 1)
+        self.cl_2 = Clock.schedule_interval(partial(self.bar_prog, [self.second, self.bar_2]), 0.1)
+        self.cl_1 = Clock.schedule_interval(self.cl_1_1, 4)
+
+    def back(self, instance):
+        if self.but_2.text == 'Stop':
+            self.start_stop(self.but_2)
+        self.but_2.text = 'Start'
+        self.meter.text = '0 : 00'
+        self.manager.transition.direction = 'right'
+        self.manager.current = 'first'

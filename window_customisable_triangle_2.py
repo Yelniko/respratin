@@ -8,7 +8,7 @@ from functools import partial
 from kivy.clock import Clock
 
 
-class Window2(Screen):
+class WindowCT2(Screen):
     def __init__(self, name='window_customisable_triangle_2'):
         super().__init__(name=name)
 
@@ -28,7 +28,7 @@ class Window2(Screen):
         self.bar_1 = ProgressBar(value=self.value, max=self.second, size_hint_y=None, height=40)
         self.bar_2 = ProgressBar(value=self.value, max=self.second * 4, height=100)
         self.bar_3 = ProgressBar(value=self.value, max=self.second * 2, height=100)
-        self.but = Button(text='Start', on_press=self.start_stop, font_size=20)
+        self.but = Button(text='Start', on_press=self.start_stop, font_size=100)
         self.bar_1_lab_1 = Label(text=self.lab_1_text, font_size=80)
         self.bar_2_lab_2 = Label(text=self.lab_2_text, font_size=80)
         self.bar_3_lab_3 = Label(text=self.lab_3_text, font_size=80)
@@ -40,7 +40,7 @@ class Window2(Screen):
         lent.add_widget(self.bar_2)
         lent.add_widget(self.bar_3_lab_3)
         lent.add_widget(self.bar_3)
-        lent_1.add_widget(Button(text='Back', on_press=self.back, font_size=20))
+        lent_1.add_widget(Button(text='Back', on_press=self.back, font_size=100))
         lent_1.add_widget(self.but)
         lent.add_widget(lent_1)
 
