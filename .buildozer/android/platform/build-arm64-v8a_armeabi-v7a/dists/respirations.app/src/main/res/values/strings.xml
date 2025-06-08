@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Respirations</string>
-    <string name="private_version">41c648180d96b0b16290ef14fc4700e0db065555</string>
+    <string name="private_version">54707009fbbb0dd11d9d8ab14e9bb3d01820c6a8</string>
     <string name="presplash_color">#000000</string>
     <string name="urlScheme">kivy</string>
 </resources>

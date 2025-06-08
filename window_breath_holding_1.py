@@ -12,9 +12,9 @@ class WindowBH1(Screen):
         with open('breath-holding_memory.txt', 'r') as file1:
             self.memory = list(map(int, file1.read().split()))
 
-        self.lad_1 = Label(text=f'{self.memory[-1] // 60} : {(self.memory[-1] % 60) : 02}', font_size=80)
-        self.lad_2 = Label(text=f'{(int(sum(self.memory)/len(self.memory))) // 60} : {((int(sum(self.memory) / len(self.memory))) % 60): 02}', font_size=80)
-        self.lad_3 = Label(text=f'{max(self.memory)// 60} : {(max(self.memory) % 60) : 02}', font_size=80)
+        self.lad_1 = Label(text=f'{self.memory[-1] // 60} : {(self.memory[-1] % 60):02}', font_size=65)
+        self.lad_2 = Label(text=f'{(int(sum(self.memory)/len(self.memory))) // 60} : {((int(sum(self.memory) / len(self.memory))) % 60):02}', font_size=65)
+        self.lad_3 = Label(text=f'{max(self.memory)// 60} : {(max(self.memory) % 60):02}', font_size=65)
 
         lent = BoxLayout(orientation='vertical', padding=2)
         lent_text_1 = BoxLayout(orientation='vertical', padding=2)
@@ -23,13 +23,13 @@ class WindowBH1(Screen):
         lent_1 = BoxLayout(padding=3)
         lent_b = BoxLayout(padding = 2)
 
-        lent_text_1.add_widget(Label(text='Recent', font_size=80))
+        lent_text_1.add_widget(Label(text='Recent', font_size=65))
         lent_text_1.add_widget(self.lad_1)
 
-        lent_text_2.add_widget(Label(text='Average', font_size=80))
+        lent_text_2.add_widget(Label(text='Average', font_size=65))
         lent_text_2.add_widget(self.lad_2)
 
-        lent_text_3.add_widget(Label(text='Max', font_size=80))
+        lent_text_3.add_widget(Label(text='Max', font_size=65))
         lent_text_3.add_widget(self.lad_3)
 
         lent_b.add_widget(Button(text='Back', on_press=self.back, font_size=100))
@@ -47,9 +47,9 @@ class WindowBH1(Screen):
     def update(self, df):
         with open('breath-holding_memory.txt', 'r') as file1:
             self.memory = list(map(int, file1.read().split()))
-        self.lad_1.text = f'{self.memory[-1] // 60} : {(self.memory[-1] % 60) : 02}'
-        self.lad_2.text = f'{(int(sum(self.memory)/len(self.memory))) // 60} : {((int(sum(self.memory) / len(self.memory))) % 60): 02}'
-        self.lad_3.text = f'{max(self.memory)// 60} : {(max(self.memory) % 60) : 02}'
+        self.lad_1.text = f'{self.memory[-1] // 60} : {(self.memory[-1] % 60):02}'
+        self.lad_2.text = f'{(int(sum(self.memory)/len(self.memory))) // 60} : {((int(sum(self.memory) / len(self.memory))) % 60):02}'
+        self.lad_3.text = f'{max(self.memory)// 60} : {(max(self.memory) % 60) :02}'
 
     def test(self, instance):
         self.cl = Clock.schedule_interval(self.update, 1)
